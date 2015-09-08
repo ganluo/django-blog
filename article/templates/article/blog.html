@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% block content %}
+    {% if article_list %}
+        <div class="posts">
+            {% for post in article_list %}
+            <section class="post">
+                <header class="post-header">
+                <h2 class="post-title"><a href="/{{post.pub_date | date:'Y/m/d'}}/{{ post.title }}/">{{ post.title }}</a></h2>
+
+                        <p class="post-meta">
+                        Date:  <a class="post-author" href="#">{{post.pub_date | date:"Y-m-d"}}</a> <a class="post-category post-category-js" href="{% url 'article:category' name=post.category %}">{{ post.category | title }}</a>
+                        </p>
+                </header>
+
+                    <div class="post-description">
+                        <p>
+                            {{ post.content | custom_markdown }}
+                        </p>
+                    </div>
+            </section>
+        {% endfor %}
+
+        {% if article_list.object_list and article_list.paginator.num_pages > 1 %}
+            <div>
+            <ul class='pager'>
+                {% if article_list.has_previous %}
+                <li><a href='?page={{ article_list.previous_page_number }}'>previous</a><li>
+                {% endif %}
+
+                {% if article_list.has_next %}
+                <li><a href='?page={{ article_list.next_page_number }}'>next</a><li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </div>
+    {% endif %}
+{% endblock %}

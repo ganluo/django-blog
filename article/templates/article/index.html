@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% block content %}
+    {% if latest_article_list %}
+    <div class="posts">
+        {% for post in latest_article_list %}
+        <section class="post">
+            <header class="post-header">
+            <h2 class="post-title"> <a href="{{post.get_absolute_url}}">{{ post.title }}</a></h2>
+
+                <p class="post-meta">
+                Date:  <a class="post-author" href="#">{{post.pub_date | date:"Y-m-d"}}</a> <a class="post-category post-category-js" href="{% url 'article:category' name=post.category %}">{{ post.category | title }}</a>
+                </p>
+            </header>
+
+                <div class="post-description">
+                    <p>
+                        {{ post.content | custom_markdown }}
+                    </p>
+                </div>
+        </section>
+    {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}

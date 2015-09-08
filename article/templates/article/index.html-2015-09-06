@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if latest_article_list %}
+    <div class="posts">
+        {% for post in latest_article_list %}
+        <section class="post">
+            <header class="post-header">
+            <!--<h2 class="post-title"> <a href="{% url 'article:detail' year=post.pub_date.year month=post.pub_date.month day=post.pub_date.day title=post.title %}">{{ post.title }}</h2>-->
+                <h2 class="post-title"> <a href=href="/{{post.pub_date | date:'Y/m/d'}}/{{ post.title }}/">{{ post.title }}</h2>
+
+                    <p class="post-meta">
+                    Date:  <a class="post-author" href="#">{{post.pub_date | date:"Y-m-d"}}</a> <a class="post-category post-category-js" href="#">{{ post.category }}</a>
+                    </p>
+            </header>
+
+                <div class="post-description">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                </div>
+        </section>
+    {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
